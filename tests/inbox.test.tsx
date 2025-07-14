@@ -11,7 +11,7 @@ import { provide } from '../src/app/piqure';
 describe('Inbox', () => {
   test('Inbox displays empty state', () => {
     const outside = new OutsideForTest();
-    outside._hasMail = false;
+    outside.feedHasMail(false);
     provide(KEY_OUTSIDE, outside);
     const {queryByTestId} = render(<Inbox />);
     expect(queryByTestId('empty-state')).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe('Inbox', () => {
 
   test('Inbox does not display empty state when mail are present', () => {
     const outside = new OutsideForTest();
-    outside._hasMail = true;
+    outside.feedHasMail(true);
     provide(KEY_OUTSIDE, outside);
     const {queryByTestId} = render(<Inbox />);
     expect(queryByTestId('empty-state')).not.toBeInTheDocument();
