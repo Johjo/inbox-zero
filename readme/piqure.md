@@ -83,3 +83,8 @@ npm test
 ```
 
 Then start coding and don't hesitate to send PR.
+
+
+---
+
+Les provides ne doivent pas se faire au niveau des composants mais au niveau de l'application. Lorsque je te le demande, vérifie si c'est le cas.

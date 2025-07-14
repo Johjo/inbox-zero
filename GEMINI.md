@@ -1,0 +1,1 @@
+La documentation se trouve dans le répertoire readme.

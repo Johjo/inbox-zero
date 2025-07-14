@@ -8,8 +8,6 @@ export class OutsideForTest {
 
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
 
-provide(KEY_OUTSIDE, new OutsideForTest());
-
 export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
     return (
