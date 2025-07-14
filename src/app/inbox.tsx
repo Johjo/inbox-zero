@@ -1,7 +1,12 @@
 import React from 'react';
+import EmptyState from './EmptyState';
 
 const Inbox = () => {
-  return <div data-testid="inbox">Vous n'avez aucun email</div>;
+  return (
+    <div data-testid="inbox">
+      <EmptyState />
+    </div>
+  );
 };
 
 export default Inbox;
