@@ -2,15 +2,24 @@
  * @vitest-environment jsdom
  */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Inbox from '../src/app/inbox';
+import { render } from '@testing-library/react';
 import {describe, expect, test } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import {Inbox, OutsideForTest} from '../src/app/inbox';
 
 describe('Inbox', () => {
   test('Inbox displays empty state', () => {
-    const {getByTestId} = render(<Inbox />);
-    expect(getByTestId('empty-state')).toBeInTheDocument();
+    const outside = new OutsideForTest();
+    outside._hasMail = false;
+    const {queryByTestId} = render(<Inbox outside={outside} />);
+    expect(queryByTestId('empty-state')).toBeInTheDocument();
+  });
+
+  test('Inbox does not display empty state when mail are present', () => {
+    const outside = new OutsideForTest();
+    outside._hasMail = true;
+    const {queryByTestId} = render(<Inbox outside={outside} />);
+    expect(queryByTestId('empty-state')).not.toBeInTheDocument();
   });
 
 

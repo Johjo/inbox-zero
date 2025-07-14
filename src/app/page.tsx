@@ -1,5 +1,5 @@
 import React from 'react';
-import Inbox from './inbox';
+import { Inbox } from './inbox';
 
 export default function Home() {
   return (

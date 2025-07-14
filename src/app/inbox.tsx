@@ -1,12 +1,18 @@
 import React from 'react';
 import EmptyState from './EmptyState';
 
-const Inbox = () => {
-  return (
-    <div data-testid="inbox">
-      <EmptyState />
-    </div>
-  );
-};
+export class OutsideForTest {
 
-export default Inbox;
+}
+
+interface InboxProps {
+    outside?: OutsideForTest
+}
+
+export const Inbox = ({outside}: InboxProps) => {
+    return (
+        <div data-testid="inbox">
+            {!outside._hasMail && <EmptyState/>}
+        </div>
+    );
+};
