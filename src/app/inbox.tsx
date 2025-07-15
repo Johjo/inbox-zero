@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyState from './EmptyState';
-import { key, inject, provide } from './piqure';
+import { key, inject } from './piqure';
 
 export class OutsideForTest {
     private _hasMail = false;
