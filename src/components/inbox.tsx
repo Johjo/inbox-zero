@@ -3,13 +3,15 @@ import EmptyState from '../app/EmptyState';
 import {inject, key} from '../app/piqure';
 import {Mail, MailView} from '../app/Mail';
 import {match} from 'ts-pattern';
+import {ImapAuthentication} from "@/components/ImapAuthentication";
 
 type InboxViewEmpty = { status: 'empty'; };
 type InboxViewMail = { status: 'success'; mail: MailView};
-type InboxView = InboxViewEmpty | InboxViewMail;
+type InboxViewImapAuthentication = { status: 'imap-identification' };
+type InboxView = InboxViewEmpty | InboxViewMail | InboxViewImapAuthentication;
 
 interface InboxOutside {
-    view(): InboxViewEmpty | InboxViewMail;
+    view(): InboxView;
 }
 
 export class OutsideForTest implements InboxOutside {
@@ -25,6 +27,7 @@ export class OutsideForTest implements InboxOutside {
 }
 
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
+
 export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
     return (
@@ -32,6 +35,7 @@ export const Inbox = () => {
             {match(outside.view())
                 .with({ status: 'empty' }, () => <EmptyState />)
                 .with({ status: 'success' }, (view) => <Mail view={view.mail} />)
+                .with({ status: 'imap-identification' }, () => <ImapAuthentication/>)
                 .exhaustive()}
         </div>
     );

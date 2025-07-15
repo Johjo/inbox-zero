@@ -37,4 +37,15 @@ describe('Inbox', () => {
       expect(queryByTestId('mail')).toBeInTheDocument();
     });
   });
+
+  describe('Identification', () => {
+    test('should display identification', () => {
+      outside.feedView({status: 'imap-identification'})
+      const {queryByTestId} = render(<Inbox />);
+      expect(queryByTestId('imap-identification')).toBeInTheDocument();
+    });
+
+
+  });
+
 });
