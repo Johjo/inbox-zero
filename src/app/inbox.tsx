@@ -1,11 +1,11 @@
 import React from 'react';
 import EmptyState from './EmptyState';
-import { key, inject } from './piqure';
-import { Mail } from './Mail';
-import { match } from 'ts-pattern';
+import {inject, key} from './piqure';
+import {Mail, MailView} from './Mail';
+import {match} from 'ts-pattern';
 
 type InboxViewEmpty = { status: 'empty'; };
-type InboxViewMail = { status: 'success'; };
+type InboxViewMail = { status: 'success'; mail: MailView};
 type InboxView = InboxViewEmpty | InboxViewMail;
 
 export class OutsideForTest {
@@ -24,13 +24,11 @@ export class OutsideForTest {
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
 export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
-    const view = outside.view();
-
     return (
         <div data-testid="inbox">
-            {match(view)
+            {match(outside.view())
                 .with({ status: 'empty' }, () => <EmptyState />)
-                .with({ status: 'success' }, () => <Mail />)
+                .with({ status: 'success' }, (view) => <Mail view={view.mail} />)
                 .exhaustive()}
         </div>
     );

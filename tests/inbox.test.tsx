@@ -20,7 +20,7 @@ describe('Inbox', () => {
 
     test('Inbox does not display empty state when mail are present', () => {
       const outside = new OutsideForTest();
-      outside.feedView({status: 'success'})
+      outside.feedView({status: 'success', mail: {subject: 'test', body: 'test'}})
       provide(KEY_OUTSIDE, outside);
       const {queryByTestId} = render(<Inbox />);
       expect(queryByTestId('empty-state')).not.toBeInTheDocument();
@@ -30,7 +30,7 @@ describe('Inbox', () => {
   describe('First mail', () => {
     test('it should display the mail component when mail is present', () => {
       const outside = new OutsideForTest();
-      outside.feedView({status: 'success'})
+      outside.feedView({status: 'success', mail: {subject: 'test', body: 'test'}})
       provide(KEY_OUTSIDE, outside);
       const {queryByTestId} = render(<Inbox />);
       expect(queryByTestId('mail')).toBeInTheDocument();
