@@ -2,6 +2,7 @@ import React from 'react';
 import EmptyState from './EmptyState';
 import { key, inject } from './piqure';
 import { Mail } from './Mail';
+import { match } from 'ts-pattern';
 
 type InboxViewEmpty = { status: 'empty'; };
 type InboxViewMail = { status: 'success'; };
@@ -21,12 +22,16 @@ export class OutsideForTest {
 }
 
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
-
 export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
+    let view = outside.view();
+
     return (
         <div data-testid="inbox">
-            {outside.view().status == 'success' ? <Mail /> : <EmptyState/>}
+            {match(view)
+                .with({ status: 'empty' }, () => <EmptyState />)
+                .with({ status: 'success' }, () => <Mail />)
+                .exhaustive()}
         </div>
     );
 };
