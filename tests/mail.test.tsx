@@ -2,23 +2,23 @@
  * @vitest-environment jsdom
  */
 import React from 'react';
-import { render } from '@testing-library/react';
-import {describe, expect, test } from 'vitest';
+import {render} from '@testing-library/react';
+import {describe, expect, test} from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { Mail } from '../src/app/Mail';
+import {Mail} from '../src/app/Mail';
 
 describe('Mail', () => {
     test('it should display the subject', () => {
         const subject = 'Ceci est un sujet de test';
-        const view = { subject, body: '' };
-        const { getByText } = render(<Mail subject={subject} body={''} view={view} />);
+        const view = {subject, body: ''};
+        const {getByText} = render(<Mail view={view}/>);
         expect(getByText(subject)).toBeInTheDocument();
     });
 
     test('it should display the body', () => {
         const body = 'Ceci est un corps de test';
-        const view = { subject: '', body };
-        const { getByText } = render(<Mail subject={''} body={body} view={view} />);
+        const view = {subject: '', body};
+        const {getByText} = render(<Mail   view={view}/>);
         expect(getByText(body)).toBeInTheDocument();
     });
 });
