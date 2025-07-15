@@ -5,8 +5,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import {describe, expect, test } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { Inbox, OutsideForTest, KEY_OUTSIDE } from '../src/app/inbox';
-import { provide } from '../src/app/piqure';
+import { provide } from '@/app/piqure';
+import {Inbox, KEY_OUTSIDE, OutsideForTest} from "@/components/inbox";
 
 describe('Inbox', () => {
   describe('Empty state', () => {

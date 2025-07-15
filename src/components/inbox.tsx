@@ -1,14 +1,18 @@
 import React from 'react';
-import EmptyState from './EmptyState';
-import {inject, key} from './piqure';
-import {Mail, MailView} from './Mail';
+import EmptyState from '../app/EmptyState';
+import {inject, key} from '../app/piqure';
+import {Mail, MailView} from '../app/Mail';
 import {match} from 'ts-pattern';
 
 type InboxViewEmpty = { status: 'empty'; };
 type InboxViewMail = { status: 'success'; mail: MailView};
 type InboxView = InboxViewEmpty | InboxViewMail;
 
-export class OutsideForTest {
+interface InboxOutside {
+    view(): InboxViewEmpty | InboxViewMail;
+}
+
+export class OutsideForTest implements InboxOutside {
     private _view: InboxView = {status: 'empty'};
 
     feedView(view: InboxView) {
@@ -18,7 +22,6 @@ export class OutsideForTest {
     view() {
         return this._view;
     }
-
 }
 
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
