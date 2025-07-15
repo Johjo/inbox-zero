@@ -9,19 +9,31 @@ import { Inbox, OutsideForTest, KEY_OUTSIDE } from '../src/app/inbox';
 import { provide } from '../src/app/piqure';
 
 describe('Inbox', () => {
-  test('Inbox displays empty state', () => {
-    const outside = new OutsideForTest();
-    outside.feedHasMail(false);
-    provide(KEY_OUTSIDE, outside);
-    const {queryByTestId} = render(<Inbox />);
-    expect(queryByTestId('empty-state')).toBeInTheDocument();
+  describe('Empty state', () => {
+    test('Inbox displays empty state', () => {
+      const outside = new OutsideForTest();
+      outside.feedHasMail(false);
+      provide(KEY_OUTSIDE, outside);
+      const {queryByTestId} = render(<Inbox />);
+      expect(queryByTestId('empty-state')).toBeInTheDocument();
+    });
+
+    test('Inbox does not display empty state when mail are present', () => {
+      const outside = new OutsideForTest();
+      outside.feedHasMail(true);
+      provide(KEY_OUTSIDE, outside);
+      const {queryByTestId} = render(<Inbox />);
+      expect(queryByTestId('empty-state')).not.toBeInTheDocument();
+    });
   });
 
-  test('Inbox does not display empty state when mail are present', () => {
-    const outside = new OutsideForTest();
-    outside.feedHasMail(true);
-    provide(KEY_OUTSIDE, outside);
-    const {queryByTestId} = render(<Inbox />);
-    expect(queryByTestId('empty-state')).not.toBeInTheDocument();
+  describe('First mail', () => {
+    test('it should display the mail component when mail is present', () => {
+      const outside = new OutsideForTest();
+      outside.feedHasMail(true);
+      provide(KEY_OUTSIDE, outside);
+      const {queryByTestId} = render(<Inbox />);
+      expect(queryByTestId('mail')).toBeInTheDocument();
+    });
   });
 });

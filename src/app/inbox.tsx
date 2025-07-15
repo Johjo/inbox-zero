@@ -1,6 +1,7 @@
 import React from 'react';
 import EmptyState from './EmptyState';
 import { key, inject } from './piqure';
+import { Mail } from './Mail';
 
 export class OutsideForTest {
     private _hasMail = false;
@@ -20,7 +21,7 @@ export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
     return (
         <div data-testid="inbox">
-            {!outside.hasMail() && <EmptyState/>}
+            {outside.hasMail() ? <Mail /> : <EmptyState/>}
         </div>
     );
 };
