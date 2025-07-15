@@ -3,16 +3,21 @@ import EmptyState from './EmptyState';
 import { key, inject } from './piqure';
 import { Mail } from './Mail';
 
+type InboxViewEmpty = { status: 'empty'; };
+type InboxViewMail = { status: 'success'; };
+type InboxView = InboxViewEmpty | InboxViewMail;
+
 export class OutsideForTest {
-    private _hasMail = false;
+    private _view: InboxView = {status: 'empty'};
 
-    hasMail() {
-        return this._hasMail;
+    feedView(view: InboxView) {
+        this._view = view;
     }
 
-    feedHasMail(hasMail: boolean) {
-        this._hasMail = hasMail;
+    view() {
+        return this._view;
     }
+
 }
 
 export const KEY_OUTSIDE = key<OutsideForTest>('outside');
@@ -21,7 +26,7 @@ export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
     return (
         <div data-testid="inbox">
-            {outside.hasMail() ? <Mail /> : <EmptyState/>}
+            {outside.view().status == 'success' ? <Mail /> : <EmptyState/>}
         </div>
     );
 };
