@@ -5,7 +5,9 @@ import {fireEvent, render} from '@testing-library/react';
 import {beforeEach, describe, expect, test} from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import {provide} from '@/app/piqure';
-import {Inbox, KEY_OUTSIDE, OutsideForTest} from "@/components/inbox";
+import {Inbox} from "@/components/inbox/inbox";
+import {OutsideForTest} from "@/components/inbox/outsideForTest";
+import {KEY_OUTSIDE} from "@/components/inbox/inboxOutside.port";
 
 describe('Inbox', () => {
   let outside: OutsideForTest;

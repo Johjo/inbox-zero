@@ -5,7 +5,7 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import {describe, expect, test} from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import {Mail} from '../src/app/Mail';
+import {Mail} from '@/components/Mail';
 
 describe('Mail', () => {
     test('it should display the subject', () => {

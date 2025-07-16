@@ -1,7 +1,8 @@
 import React from 'react';
-import { Inbox } from '../components/inbox';
+import { Inbox } from '../components/inbox/inbox';
 import { provide } from './piqure';
-import { KEY_OUTSIDE, OutsideForTest } from '../components/inbox';
+import {OutsideForTest} from "@/components/inbox/outsideForTest";
+import {KEY_OUTSIDE} from "@/components/inbox/inboxOutside.port";
 
 const outsideForTest = new OutsideForTest();
 outsideForTest.feedView({status: 'imap-identification'});
