@@ -3,7 +3,9 @@ import { Inbox } from '../components/inbox';
 import { provide } from './piqure';
 import { KEY_OUTSIDE, OutsideForTest } from '../components/inbox';
 
-provide(KEY_OUTSIDE, new OutsideForTest());
+const outsideForTest = new OutsideForTest();
+outsideForTest.feedView({status: 'imap-identification'});
+provide(KEY_OUTSIDE, outsideForTest);
 
 export default function Home() {
   return (
