@@ -1,10 +1,10 @@
 import {ConnectionProperties} from "@/components/ImapAuthentication";
 import {InboxView} from "@/components/inbox/inbox";
-import {InboxOutside} from "@/components/inbox/inboxOutside.port";
+import {InboxOutsidePort} from "@/components/inbox/inboxOutside.port";
 
 type History = {name: "on_connexion_click"} & ConnectionProperties;
 
-export class OutsideForTest implements InboxOutside {
+export class OutsideForTest implements InboxOutsidePort {
     private _view: InboxView = {status: 'empty'};
     private _history: History[] = [];
 

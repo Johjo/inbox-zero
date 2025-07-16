@@ -8,10 +8,10 @@ type InboxViewImapAuthentication = { status: 'imap-identification' };
 export type InboxView = InboxViewEmpty | InboxViewMail | InboxViewImapAuthentication;
 
 
-export interface InboxOutside {
+export interface InboxOutsidePort {
     view(): InboxView;
 
     on_connexion_click(props: ConnectionProperties): void;
 }
 
-export const KEY_OUTSIDE = key<InboxOutside>('outside');
+export const KEY_OUTSIDE = key<InboxOutsidePort>('outside');
