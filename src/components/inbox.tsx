@@ -3,18 +3,19 @@ import EmptyState from '@/app/EmptyState';
 import {inject, key} from '@/app/piqure';
 import {Mail, MailView} from '@/app/Mail';
 import {match} from 'ts-pattern';
-import {ImapAuthentication} from "@/components/ImapAuthentication";
+import {ConnectionProperties, ImapAuthentication} from "@/components/ImapAuthentication";
 
 type InboxViewEmpty = { status: 'empty'; };
 type InboxViewMail = { status: 'success'; mail: MailView};
 type InboxViewImapAuthentication = { status: 'imap-identification' };
-type InboxView = InboxViewEmpty | InboxViewMail | InboxViewImapAuthentication;
+export type InboxView = InboxViewEmpty | InboxViewMail | InboxViewImapAuthentication;
 
 interface InboxOutside {
     view(): InboxView;
+    on_connexion_click(props: ConnectionProperties): void;
 }
 
-type History = {name: "on_connexion_click"};
+type History = {name: "on_connexion_click"} & ConnectionProperties;
 
 
 export class OutsideForTest implements InboxOutside {
@@ -33,12 +34,12 @@ export class OutsideForTest implements InboxOutside {
         return this._history;
     }
 
-    on_connexion_click() {
-        this._history.push({name: 'on_connexion_click'});
+    on_connexion_click(props: ConnectionProperties) {
+        this._history.push({name: 'on_connexion_click', ...props});
     }
 }
 
-export const KEY_OUTSIDE = key<OutsideForTest>('outside');
+export const KEY_OUTSIDE = key<InboxOutside>('outside');
 
 export const Inbox = () => {
     const outside = inject(KEY_OUTSIDE);
@@ -47,7 +48,7 @@ export const Inbox = () => {
             {match(outside.view())
                 .with({ status: 'empty' }, () => <EmptyState />)
                 .with({ status: 'success' }, (view) => <Mail view={view.mail} />)
-                .with({ status: 'imap-identification' }, () => <ImapAuthentication on_connexion_click={() => outside.on_connexion_click()}/>)
+                .with({ status: 'imap-identification' }, () => <ImapAuthentication on_connexion_click={(props) => outside.on_connexion_click(props)}/>)
                 .exhaustive()}
         </div>
     );

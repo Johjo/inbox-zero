@@ -44,14 +44,25 @@ describe('Inbox', () => {
       expect(queryByTestId('imap-identification')).toBeInTheDocument();
     });
 
-    test('should capture on click event', () => {
+    test('should capture on click event with credentials', () => {
       outside.feedView({status: 'imap-identification'})
       const {getByTestId} = render(<Inbox />);
-      const connectButton = getByTestId('imap-connect');
+      
+      fireEvent.change(getByTestId('imap-server'), {target: {value: 'imap.example.com'}});
+      fireEvent.change(getByTestId('imap-port'), {target: {value: '993'}});
+      fireEvent.change(getByTestId('imap-username'), {target: {value: 'user'}});
+      fireEvent.change(getByTestId('imap-password'), {target: {value: 'password'}});
 
+      const connectButton = getByTestId('imap-connect');
       fireEvent.click(connectButton);
 
-      expect(outside.history()).toEqual([{name: 'on_connexion_click'}]);
+      expect(outside.history()).toEqual([{
+        name: 'on_connexion_click',
+        server: 'imap.example.com',
+        port: '993',
+        username: 'user',
+        password: 'password'
+      }]);
     });
   });
 
