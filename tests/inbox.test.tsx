@@ -1,11 +1,10 @@
 /**
  * @vitest-environment jsdom
  */
-import React from 'react';
-import { render } from '@testing-library/react';
-import {beforeEach, describe, expect, test } from 'vitest';
+import {fireEvent, render} from '@testing-library/react';
+import {beforeEach, describe, expect, test} from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { provide } from '@/app/piqure';
+import {provide} from '@/app/piqure';
 import {Inbox, KEY_OUTSIDE, OutsideForTest} from "@/components/inbox";
 
 describe('Inbox', () => {
@@ -45,7 +44,15 @@ describe('Inbox', () => {
       expect(queryByTestId('imap-identification')).toBeInTheDocument();
     });
 
+    test('should capture on click event', () => {
+      outside.feedView({status: 'imap-identification'})
+      const {getByTestId} = render(<Inbox />);
+      const connectButton = getByTestId('imap-connect');
 
+      fireEvent.click(connectButton);
+
+      expect(outside.history()).toEqual([{name: 'on_connexion_click'}]);
+    });
   });
 
 });

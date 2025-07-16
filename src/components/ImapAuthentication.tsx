@@ -1,8 +1,13 @@
 import React from "react";
 import styles from './ImapAuthentication.module.css';
 
-export function ImapAuthentication() {
-    return <form data-testid="imap-identification" className={styles.formContainer}>
+export function ImapAuthentication({ on_connexion_click }: { on_connexion_click: () => void }) {
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        on_connexion_click();
+    };
+
+    return <form data-testid="imap-identification" className={styles.formContainer} onSubmit={handleSubmit}>
         <div className={styles.formField}>
             <label htmlFor="imap-server" className={styles.formLabel}>Serveur IMAP</label>
             <input id="imap-server" type="text" data-testid="imap-server" className={styles.formInput}/>

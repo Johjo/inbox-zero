@@ -1,7 +1,7 @@
 import React from 'react';
-import EmptyState from '../app/EmptyState';
-import {inject, key} from '../app/piqure';
-import {Mail, MailView} from '../app/Mail';
+import EmptyState from '@/app/EmptyState';
+import {inject, key} from '@/app/piqure';
+import {Mail, MailView} from '@/app/Mail';
 import {match} from 'ts-pattern';
 import {ImapAuthentication} from "@/components/ImapAuthentication";
 
@@ -14,8 +14,12 @@ interface InboxOutside {
     view(): InboxView;
 }
 
+type History = {name: "on_connexion_click"};
+
+
 export class OutsideForTest implements InboxOutside {
     private _view: InboxView = {status: 'empty'};
+    private _history: History[] = [];
 
     feedView(view: InboxView) {
         this._view = view;
@@ -23,6 +27,14 @@ export class OutsideForTest implements InboxOutside {
 
     view() {
         return this._view;
+    }
+
+    history() : History[] {
+        return this._history;
+    }
+
+    on_connexion_click() {
+        this._history.push({name: 'on_connexion_click'});
     }
 }
 
@@ -35,7 +47,7 @@ export const Inbox = () => {
             {match(outside.view())
                 .with({ status: 'empty' }, () => <EmptyState />)
                 .with({ status: 'success' }, (view) => <Mail view={view.mail} />)
-                .with({ status: 'imap-identification' }, () => <ImapAuthentication/>)
+                .with({ status: 'imap-identification' }, () => <ImapAuthentication on_connexion_click={() => outside.on_connexion_click()}/>)
                 .exhaustive()}
         </div>
     );
